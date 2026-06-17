@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "memory-audit-plugin",
+  "version": "0.1.0",
+  "description": "Audit a Claude Code project memory dir for rot: dangling index pointers, orphan files, unresolved [[links]], shipped/DONE archive candidates, oversize index, and frontmatter/slug issues. Read-only report; fixes are proposed for your approval. One slash command: /memory-audit.",
+  "author": {
+    "name": "Tal Golan"
+  },
+  "repository": "https://github.com/talgolan/memory-audit-plugin",
+  "license": "MIT",
+  "keywords": ["memory", "audit", "maintenance", "claude-code", "hygiene"]
+}
