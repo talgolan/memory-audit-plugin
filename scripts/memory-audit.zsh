@@ -80,7 +80,7 @@ done
 
 # Index pointers: (file.md) targets referenced from MEMORY.md.
 typeset -a index_targets
-index_targets=(${(f)"$(grep -oE '\((feedback|project|reference|user)_[a-z0-9_]+\.md\)' "$MEM" 2>/dev/null | tr -d '()')"})
+index_targets=(${(f)"$(grep -oE '\((feedback|project|reference|user)[a-z0-9_-]+\.md\)' "$MEM" 2>/dev/null | tr -d '()')"})
 
 # Active index line count (lines starting "- [").
 local index_lines=$(grep -cE '^- \[' "$MEM" 2>/dev/null)
@@ -110,11 +110,11 @@ done
 
 # done_candidate: project_* index line flagged DONE/SHIPPED/MERGED
 while IFS= read -r line; do
-  [[ "$line" == *'(project_'*'.md)'* ]] || continue
+  print -r -- "$line" | grep -qE '\(project[a-z0-9_-]+\.md\)' || continue
   print -r -- "$line" | grep -qiE 'DONE|SHIPPED|MERGED|no pending work|✅' || continue
-  # extract the project_*.md file token for actionability (robust grep, not a
+  # extract the project*.md file token for actionability (robust grep, not a
   # fragile nested parameter expansion).
-  local tok=$(print -r -- "$line" | grep -oE 'project_[a-z0-9_]+\.md' | head -1)
+  local tok=$(print -r -- "$line" | grep -oE 'project[a-z0-9_-]+\.md' | head -1)
   f_done+=("${tok:-${line[1,60]}}")
 done < <(grep -E '^- \[' "$MEM" 2>/dev/null)
 
